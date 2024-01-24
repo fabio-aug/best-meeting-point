@@ -23,7 +23,7 @@ class Dijkstra {
         }
     }
 
-    public int shortestPath(int from, int to) {
+    public ReturnData shortestPath(int from, int to) {
         PriorityQueue<EdgeWeight> listEdges = new PriorityQueue<>();
 
         int[][] distance = new int[this.numberOfVertices][2];
@@ -53,6 +53,23 @@ class Dijkstra {
             }
         }
 
-        return distance[to][0];
+        return new ReturnData(distance[to][0], showInfo(distance, to));
+    }
+
+    public String concatInfo(int[][] distance, int index) {
+        String vertice = "Vértice: " + index;
+        String cost = "Custo: " + distance[index][0];
+        return vertice + " - " + cost;
+    }
+
+    public String showInfo(int[][] distance, int to) {
+        String print = "\n" + concatInfo(distance, to);
+        int index = distance[to][1];
+        while (index != 0 && distance[index][0] != 0) {
+            print = "\n" + concatInfo(distance, index) + print;
+            index = distance[index][1];
+        }
+        print = concatInfo(distance, index) + print;
+        return print;
     }
 }

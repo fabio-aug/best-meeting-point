@@ -32,19 +32,26 @@ public class BestPoint {
 
         int local = -1;
         int coust = Integer.MAX_VALUE;
+        String tour = "";
         for (int i = 0; i < this.encounters.length; i++) {
             int tempCost = 0;
+            String tempTour = "";
+
             for (int j = 0; j < this.friends.length; j++) {
-                tempCost += dijkstra.shortestPath(this.friends[j], this.encounters[i]);
+                ReturnData aux = dijkstra.shortestPath(this.friends[j], this.encounters[i]);
+                tempCost += aux.getCost();
+                tempTour += "\nAmigo: " + this.friends[j] + "\n" + aux.getTour() + "\n";
             }
             if (tempCost < coust) {
                 local = this.encounters[i];
                 coust = tempCost;
+                tour = tempTour;
             }
         }
 
         System.out.println("Melhor local: " + local);
         System.out.println("Custo total de locomoção: " + coust);
+        System.out.println("Tour de cada amigo: \n" + tour);
     }
 
     public static void main(String[] args) {
